@@ -208,7 +208,7 @@ local_search:
 # ---------------------------------------------------------------------------------------
 comment:
   enable: true   # Option values: true | false
-  use: valine     # Option values: valine | gitalk | twikoo | waline | giscus | artalk | disqus
+  use: gitalk     # Option values: valine | gitalk | twikoo | waline | giscus | artalk | disqus
 
   # Valine
   # See: https://github.com/xCss/Valine
@@ -223,11 +223,11 @@ comment:
   # See: https://github.com/gitalk/gitalk
   #      https://gitalk.github.io
   gitalk:
-    github_id:        # GitHub repo owner
+    github_id: RedrockerLi        # GitHub repo owner
     github_admins:    # GitHub Admins (in Array type), optional
-    repository:       # Repository name to store issues
-    client_id:        # GitHub Application Client ID
-    client_secret:    # GitHub Application Client Secret
+    repository: RedrockerLi.github.io      # Repository name to store issues
+    client_id: 098664684d8a11b6bfc3       # GitHub Application Client ID
+    client_secret: a583dd7da79426e65fa4fd9d0ea7751ce19fde7f    # GitHub Application Client Secret
     proxy:            # GitHub oauth request reverse proxy for CORS
 
   # Twikoo
