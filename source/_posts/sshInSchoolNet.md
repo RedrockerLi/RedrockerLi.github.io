@@ -1,7 +1,7 @@
 ---
-title: sshInSchoolNet
-date: 2023-11-23 23:53:54
-tags:折腾杂记
+title: 在校园网环境下的ssh远程连接
+date: 2023-11-24 13:03:34
+tags: 折腾杂记
 ---
 
 # 在校园网环境下的ssh远程连接
@@ -54,32 +54,32 @@ mail -s 'NEW IP' example@qq.com < ~/Documents/auto/IP.txt #把文件信息通过
 内容大致如下
 
 > lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
->      inet 127.0.0.1  netmask 255.0.0.0
->      inet6 ::1  prefixlen 128  scopeid 0x10<host>
->      loop  txqueuelen 1000  (Local Loopback)
->      RX packets 297212  bytes 134643447 (134.6 MB)
->      RX errors 0  dropped 0  overruns 0  frame 0
->      TX packets 297212  bytes 134643447 (134.6 MB)
->      TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+>         inet 127.0.0.1  netmask 255.0.0.0
+>         inet6 ::1  prefixlen 128  scopeid 0x10<host>
+>         loop  txqueuelen 1000  (Local Loopback)
+>         RX packets 297212  bytes 134643447 (134.6 MB)
+>         RX errors 0  dropped 0  overruns 0  frame 0
+>         TX packets 297212  bytes 134643447 (134.6 MB)
+>         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 >
 > wlp0s20f3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
->      inet **这个地方是正确的IP** netmask 255.255.128.0  broadcast 10.204.127.255
->      inet6 fd7a:5341:1935:0:89a2:6fac:1e45:af98  prefixlen 64  scopeid 0x0<global>
->      inet6 fd7a:5341:1935:0:ee98:3ee9:f87c:6ab9  prefixlen 64  scopeid 0x0<global>
->      inet6 2400:dd01:103a:1017:14b4:6cdd:be2f:f8a7  prefixlen 64  scopeid 0x0<global>
->      inet6 2400:dd01:103a:1017:8f63:8e7:403:5d3c  prefixlen 64  scopeid 0x0<global>
->      inet6 fe80::8eae:b686:38bd:13aa  prefixlen 64  scopeid 0x20<link>
->      ether c4:75:ab:d3:d1:73  txqueuelen 1000  (Ethernet)
->      RX packets 2424714  bytes 878853503 (878.8 MB)
->      RX errors 0  dropped 0  overruns 0  frame 0
->      TX packets 308007  bytes 70057896 (70.0 MB)
->      TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+>         inet **这个地方是正确的IP** netmask 255.255.128.0  broadcast 10.204.127.255
+>         inet6 fd7a:5341:1935:0:89a2:6fac:1e45:af98  prefixlen 64  scopeid 0x0<global>
+>         inet6 fd7a:5341:1935:0:ee98:3ee9:f87c:6ab9  prefixlen 64  scopeid 0x0<global>
+>         inet6 2400:dd01:103a:1017:14b4:6cdd:be2f:f8a7  prefixlen 64  scopeid 0x0<global>
+>         inet6 2400:dd01:103a:1017:8f63:8e7:403:5d3c  prefixlen 64  scopeid 0x0<global>
+>         inet6 fe80::8eae:b686:38bd:13aa  prefixlen 64  scopeid 0x20<link>
+>         ether c4:75:ab:d3:d1:73  txqueuelen 1000  (Ethernet)
+>         RX packets 2424714  bytes 878853503 (878.8 MB)
+>         RX errors 0  dropped 0  overruns 0  frame 0
+>         TX packets 308007  bytes 70057896 (70.0 MB)
+>         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
-但还需要让发送自动进行。
+但还需要让发送自动进行,如果使用ubuntu就非常方便。
 
 打开**StartupApplications**,如下图所示,点击**add**即可开机自启动。
 
-![image-20231010224932555](./sshInSchoolNet.assets/image-20231010224932555.png)
+![image-20231010224932555](./sshInSchoolNet/image-20231010224932555.png)
 
 开机自启动时必须等待联网后才能发送IP地址，因此把之前的文件改为如下所示。
 
@@ -100,6 +100,6 @@ mail -s 'NEW IP' example@qq.com < ~/Documents/auto/IP.txt #把文件信息通过
 
 ### 内网穿透
 
-下载花生壳可解决
+通过花生壳可解决
 
 `phddns status`查看花生壳状态。
