@@ -79,7 +79,7 @@ mail -s 'NEW IP' example@qq.com < ~/Documents/auto/IP.txt #把文件信息通过
 
 打开**StartupApplications**,如下图所示,点击**add**即可开机自启动。
 
-![image-20231010224932555](sshInSchoolNet/image-20231010224932555.png)
+![image-20231010224932555](image-20231010224932555.png)
 
 开机自启动时必须等待联网后才能发送IP地址，因此把之前的文件改为如下所示。
 
