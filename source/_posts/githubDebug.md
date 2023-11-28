@@ -2,6 +2,7 @@
 title: GitHub使用寄录
 date: 2023-11-28 00:51:39
 tags:  Debug
+excerpt: 如题，寄了才录。
 ---
 
 ~~抛开不当所得被没收的风险~~，用GitHub还遇到了不少Bug，甚至可能会困扰我很长时间。

@@ -6,6 +6,7 @@ tags:
     - 信号与系统
     - 傅里叶变换 
 mathjax: true
+excerpt: 怎么到处都在用傅里叶。
 ---
 # 定义
 
