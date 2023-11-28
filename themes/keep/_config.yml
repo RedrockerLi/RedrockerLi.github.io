@@ -226,7 +226,7 @@ comment:
   gitalk:
     github_id: RedrockerLi   # GitHub repo owner
     github_admins:    # GitHub Admins (in Array type), optional
-    repository: RedrockerLi.github.io    # Repository name to store issues
+    repository: Comment   # Repository name to store issues
     client_id: 2468b3fa2be9f40f6faf  # GitHub Application Client ID
     client_secret:  c95df9dbfb53b43e64baf6046f5d832b1cf48583  # GitHub Application Client Secret
     proxy:            # GitHub oauth request reverse proxy for CORS
