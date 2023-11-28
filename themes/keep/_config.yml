@@ -334,14 +334,11 @@ footer:
 # ---------------------------------------------------------------------------------------
 # Docs: https://keep-docs.xpoet.cn/basis/configuration-guide/inject.html
 # ---------------------------------------------------------------------------------------
+#css inject
 inject:
-  enable: false  # Option values: true | false
+  enable: true
   css:
-    -
-    # e.g.
-    # - /css/custom-1.css
-    # - /css/custom-2.css
-    # - ...
+    - /css/firstPage.css
   js:
     -
     # e.g.
