@@ -5,9 +5,7 @@ tags: 折腾杂记
 excerpt: 为出门不带电脑做出的努力。
 ---
 
-# 在校园网环境下的ssh远程连接
-
-## 下载openssh-server
+# 下载openssh-server
 
 - 使用`sudo apt-get install -y openssh-server`命令即可下载openssh-server。
 
@@ -19,7 +17,7 @@ excerpt: 为出门不带电脑做出的努力。
 
 - Ubuntu 默认使用 [ufw 防火墙](https://linux265.com/news/3793.html)配置工具，如果你启用了防火墙，请确保防火墙打开了 SSH 端口`sudo ufw allow ssh`
 
-## 使用ssh
+# 使用ssh
 
 - 禁用：`sudo service ssh stop`
 
@@ -31,7 +29,7 @@ excerpt: 为出门不带电脑做出的努力。
 
 校园网~~通常~~（我的）是一个局域网，这一点比较方便，但还有一些问题。
 
-### 非静态IP
+## 非静态IP
 
 在校园网中，IP地址是变化的（至少我无法获得静态IP，也无法保证电脑永远不关机）。
 
@@ -95,11 +93,11 @@ ifconfig > ~/Documents/auto/IP.txt #把IP信息写入一个文件
 mail -s 'NEW IP' example@qq.com < ~/Documents/auto/IP.txt #把文件信息通过邮件发送出去
 ```
 
-### Termius的使用
+## Termius的使用
 
 这是一个全平台的软件，免费版的功能已足够使用。具体用法可以STFW。
 
-### 内网穿透
+## 内网穿透
 
 通过花生壳可解决
 
