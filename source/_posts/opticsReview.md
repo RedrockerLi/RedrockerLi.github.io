@@ -485,8 +485,8 @@ $\Delta=2nh+\frac{\lambda}{2}$
   > r=
   > \left\{
   > \begin{aligned}
-  > &\sqrt{(k+\frac{1}{2})R\lambda}\qquad,k=0,1,2,...,\qquad亮纹\\
-  > &\sqrt{(k+1)R\lambda}\qquad,k=-1,0,1,2,...,\qquad暗纹
+  > &\sqrt{(k+\frac{1}{2})R\lambda}\qquad,k=0,1,2,...,\qquad\mathrm{亮纹}\\
+  > &\sqrt{(k+1)R\lambda}\qquad,k=-1,0,1,2,...,\qquad\mathrm{暗纹}
   > \end{aligned}
   > \right.
   > $
