@@ -35,8 +35,6 @@ kex_exchange_identification: Connection closed by remote host
 Connection closed by UNKNOWN port 65535
 ````
 
-可以看到第7行使用了一条`PROXY:127.0.0.1:github.com:22,proxyport=8080`的命令，这是我此前按CSDN上的方法设置的github代理，在`~/.ssh/config`文件中。如果我没有记错，当时也是无法推送，问题和网络相关，设置后确实从无法推送变成了可以推送。
+可以看到第7行使用了一条`PROXY:127.0.0.1:github.com:22,proxyport=8080`的命令，这是我此前按CSDN上的方法设置的github代理，在`~/.ssh/config`文件中。
 
 但clash的Proxy Mode是灰色，因此注释掉相关规则，再尝试即可成功推送。
-
-至于其中的原理，先挖一个坑，当下解决了燃眉之急就够了。
