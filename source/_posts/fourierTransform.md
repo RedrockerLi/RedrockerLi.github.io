@@ -150,6 +150,34 @@ $$
 \begin{aligned}
 g(\omega)&\sim\sum\limits_{n\in\mathbb{Z}}c_n(g)e^{i(n\pi/c)\omega} \\
 c_n(g)&=\frac{1}{2c}\int_{-c}^cg(\omega)e^{-i(n\pi/c)\omega}\mathrm{d}\omega \\
-&=\frac{1}{2\sqrt{\pi}}\int_{-c}^c\hat{f}(\omega)e^{-i(n\pi/c)\omega}\mathrm{d}\omega=f(-\frac{n\pi}{c})
+&=\frac{1}{2\sqrt{\pi}}\int_{-c}^c\hat{f}(\omega)e^{-i(n\pi/c)\omega}\mathrm{d}\omega=f\left(-\frac{n\pi}{c}\right)
+\end{aligned}
+$$
+进一步，考虑$(-c,c)$中的函数
+$$
+h(\omega)=e^{-it\omega}\qquad\qquad |\omega|<c
+$$
+类似的，可得
+$$
+\begin{aligned}
+h(\omega)&\sim\sum\limits_{n\in\mathbb{Z}}c_n(h)e^{i(n\pi/c)\omega} \\
+c_n(h)&=\frac{1}{2c}\int_{-c}^ch(\omega)e^{-i(n\pi/c)\omega}\mathrm{d}\omega \\
+&=\frac{1}{2c}\int_{-c}^ce^{-it\omega}e^{-i(n\pi/c)\omega}\mathrm{d}\omega \\
+&=\frac{1}{2c}\int_{-c}^ce^{-i(ct+n\pi)\frac{\omega}{c}}c\mathrm{d}(\frac{\omega}{c})\\
+&=\left.\frac{1}{2}\frac{1}{-i(ct+n\pi)}e^{-i(ct+n\pi)t}\right|^{1}_{-1} \\
+&=\frac{\sin{(ct+n\pi)}}{ct+n\pi}
+\end{aligned}
+$$
+> Parseval等式
+>
+> $\left\{\phi_j\right\}_{j=1}^\infty$完备当且仅当$\forall\mathcal{u},\mathcal{v}\in\mathcal{V}$,有Parseval等式
+> $$\left<\mathcal{u},\mathcal{v}\right>=\sum\limits_{j=1}^\infty\left<\mathcal{u},\phi_j\right>\left<\phi_j,\mathcal{v}\right> $$
+
+$$
+\left<h,g\right>=\int_{-c}^{c}g(\omega)\overline{h(\omega)}\mathrm{d}\omega=\sum\limits_{n\in\mathbb{Z}}\left<\mathcal{h},\phi_n\right>\left<\phi_n,g\right> \\
+\begin{aligned}
+f(t)=\frac{1}{2\sqrt{\pi}}\int_{-c}^c\hat{f}(\omega)e^{i\omega t}\mathrm{d}\omega
+&=\frac{1}{2c}\int_{-c}^{c}g(\omega)\overline{h(\omega)}\mathrm{d}\omega\\&=\sum\limits_{n\in\mathbb{Z}}\overline{c_n(h)}c_n(g)\\
+&=\sum\limits_{n\in\mathbb{Z}}f\left(\frac{n\pi}{c}\right)\frac{\sin{(ct-n\pi)}}{ct-n\pi}\\
 \end{aligned}
 $$
