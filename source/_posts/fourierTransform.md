@@ -2,7 +2,7 @@
 title: 傅里叶变换
 date: 2023-11-28 00:58:00
 tags: 
-    - 数学 
+    - 数学
     - 信号与系统
     - 傅里叶变换 
 mathjax: true
@@ -92,7 +92,8 @@ $$
 - 相似性定理: $\mathcal{F}[f(ax)]=\frac{1}{a} F[\frac{\omega}{a}]$
 - 延迟定理: $\mathcal{F}[f(x-x_0)]=e^{-i\omega x_0}F(\omega)$
 - 位移定理: $\mathcal{F}[e^{i\omega_0x}f(x)]=F(\omega-\omega_0)$
-- 卷积定理: $\mathcal{F}[f_1(x)*f_2(x)]=2\pi F_1(\omega)F_2(\omega)$
+- 卷积定理: $\mathcal{F}[f_1(x)*f_2(x)]=\sqrt{2\pi} F_1(\omega)F_2(\omega)$ 
+> 系数和选定的公式前系数有关。
 
 ## $\delta$函数
 
@@ -131,3 +132,24 @@ $$
 
 ## 香农采样定理
 为了不失真地恢复模拟信号，采样频率应该大于等于模拟信号频谱中最高频率的2倍。
+### 数学证明
+设$f$在$\mathbb{R}$上连续，且$f\in L^1(\mathbb{R})$;进一步，若存在一定的常数$c$,当$|\omega|>c$时，$\hat{f}(\omega)=0$,那么下列采样公式成立。
+$$
+f(t)=\sum\limits _{n\in \mathbb{Z}}f(\frac{n\pi}{c})\frac{\sin{(ct-n\pi)}}{ct-n\pi}
+$$
+证明：由傅里叶反演公式
+$$
+f(t)=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty\hat{f}(\omega)e^{i\omega t}\mathrm{d}\omega=\int_{-c}^c\hat{f}(\omega)e^{i\omega t}\mathrm{d}\omega
+$$
+在有限区间$(-c,c)$上引入函数
+$$
+g(\omega)=\frac{c}{\sqrt{\pi}}\hat{f}(\omega)\qquad\qquad |\omega|<c
+$$
+将g扩展为$\mathbb{R}$上以$2c$为周期的周期函数，则有傅里叶级数展开
+$$
+\begin{aligned}
+g(\omega)&\sim\sum\limits_{n\in\mathbb{Z}}c_n(g)e^{i(n\pi/c)\omega} \\
+c_n(g)&=\frac{1}{2c}\int_{-c}^cg(\omega)e^{-i(n\pi/c)\omega}\mathrm{d}\omega \\
+&=\frac{1}{2\sqrt{\pi}}\int_{-c}^c\hat{f}(\omega)e^{-i(n\pi/c)\omega}\mathrm{d}\omega=f(-\frac{n\pi}{c})
+\end{aligned}
+$$
