@@ -4,7 +4,7 @@ date: 2023-11-28 00:58:00
 tags: 
     - 数学
     - 信号与系统
-    - 傅里叶变换 
+    - 傅里叶变换
 mathjax: true
 excerpt: 怎么到处都在用傅里叶。
 ---
@@ -92,7 +92,8 @@ $$
 - 相似性定理: $\mathcal{F}[f(ax)]=\frac{1}{a} F[\frac{\omega}{a}]$
 - 延迟定理: $\mathcal{F}[f(x-x_0)]=e^{-i\omega x_0}F(\omega)$
 - 位移定理: $\mathcal{F}[e^{i\omega_0x}f(x)]=F(\omega-\omega_0)$
-- 卷积定理: $\mathcal{F}[f_1(x)*f_2(x)]=\sqrt{2\pi} F_1(\omega)F_2(\omega)$ 
+- 卷积定理:$\mathcal{F}[f_1(x)*f_2(x)]=\sqrt{2\pi} F_1(\omega)F_2(\omega)$ 
+- 微分定理:$F[x\cdot f(x)](\omega)=iF'[f(x)](\omega)$
 > 系数和选定的公式前系数有关。
 
 ## $\delta$函数
@@ -124,6 +125,14 @@ $$
 5. $\delta (x)=\frac{1}{2\pi}\int_{-\infty}^\infty e^{i\omega x}\mathrm{d}\omega$
 6. $\mathcal{F}[H(x)]=\frac{1}{2}\delta(\omega)-\frac{1}{2\pi}\mathcal(F)\frac{1}{\omega}$
 
+<!-- ## 需要记忆的特殊函数
+$$
+\begin{aligned}
+&F[\sin{ax}](\omega)=\pi i[\delta(\omega+a)-\delta(\omega-a)]\\
+&F[e^{-x^2}](\omega)=\sqrt{\pi}e^{-\frac{\omega^2}{4}}
+\end{aligned}
+$$ -->
+
 ## DFT
 
 ## FFT
@@ -139,7 +148,7 @@ f(t)=\sum\limits _{n\in \mathbb{Z}}f(\frac{n\pi}{c})\frac{\sin{(ct-n\pi)}}{ct-n\
 $$
 证明：由傅里叶反演公式
 $$
-f(t)=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty\hat{f}(\omega)e^{i\omega t}\mathrm{d}\omega=\int_{-c}^c\hat{f}(\omega)e^{i\omega t}\mathrm{d}\omega
+f(t)=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty\hat{f}(\omega)e^{i\omega t}\mathrm{d}\omega=\frac{1}{\sqrt{2\pi}}\int_{-c}^c\hat{f}(\omega)e^{i\omega t}\mathrm{d}\omega
 $$
 在有限区间$(-c,c)$上引入函数
 $$
@@ -181,3 +190,4 @@ f(t)=\frac{1}{2\sqrt{\pi}}\int_{-c}^c\hat{f}(\omega)e^{i\omega t}\mathrm{d}\omeg
 &=\sum\limits_{n\in\mathbb{Z}}f\left(\frac{n\pi}{c}\right)\frac{\sin{(ct-n\pi)}}{ct-n\pi}\\
 \end{aligned}
 $$
+所以采样频率为$\frac{2\pi}{\pi/c}=2c$.
