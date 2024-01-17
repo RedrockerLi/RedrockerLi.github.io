@@ -1,12 +1,11 @@
 
 :root {
-    /* 设置首屏的文字字体大小 */
     --first-screen-font-size: 40px;
 
-    /* 设置首屏的文字颜色（白昼模式） */
     --first-screen-font-color-light: #adbac5;
  
-    /* 设置首屏的文字颜色（暗黑模式） */
     --first-screen-font-color-dark: #adbac5;
+
+    --first-screen-header-font-color-light:#adbac5;
   
  }
