@@ -106,6 +106,159 @@ $$J_1(x)=\sum\limits_{K=0}^\infty(-1)^K\frac{1}{K!(1+K)!}(\frac{x}{2})^{2K+1} $$
 $84\%$的能量聚集在零级衍射斑（艾里斑）中。
 
 艾里斑半角宽度：$1.22\frac{\lambda}{D},D$为直径
+
+## 仪器的分辨本领
+单透镜=两个透镜+光阑
+
+夫琅禾费衍射在一切使用透镜的光学系统中存在。
+
+瑞利判据：$\delta\theta=\Delta\theta_0$
+
+# 多缝衍射与光栅
+$$\alpha=\frac{\pi a}{\lambda}\sin{\theta}\qquad\beta=\frac{\delta}{2}=\frac{\pi d}{\lambda}\sin{\theta} $$
+$$I(\theta)=I_0\left(\frac{\sin{\alpha}}{\alpha} \right)^2\left(\frac{\sin{N\beta}}{\sin{\beta}} \right)^2 $$
+![多缝夫琅禾费衍射强度分布曲线](https://cdn.jsdelivr.net/gh/RedrockerLi/RedrockerLi.github.io@main/Pics/多缝夫琅禾费衍射强度分布曲线.lmro3wg8gr4.webp)
+两个主峰间有$N-1$个零点，$N-2$个次极大值。次极强非常弱，衍射条纹为细锐的离散条纹。
+
+- 极大值位置：$\beta=k\pi\qquad  d\sin{\theta_k}=k\lambda$
+- 缺极：干涉极大和衍射极小重合。$d$和$a$成简单整数比。
+- 半角宽度：$\frac{\lambda}{Nd} $,干涉条纹的$\frac{1}{N} $
+- $N$变大，光的能量向主极大集中，单缝$N^2$倍，亮条纹更加细而亮。
+- 量程问题：$d\sin{\theta_k}=k\lambda\quad\theta_k<\frac{\pi}{2} $
+
+## 光谱光栅仪
+- 角分辨率：$D_\theta=\frac{\delta\theta}{\delta\lambda}=\frac{k}{d\cos{\theta_k}} $
+- 线色散率：$D_l=\frac{\delta l}{\delta\lambda}=fD_\theta $
+- 色分辨率：$\delta\lambda_m=\frac{\lambda}{kN}\quad R=\frac{\lambda}{\delta\lambda}=kN $
+- 自由光谱范围：第$k$极和第$k+1$极的光谱不重合的测量范围。
+
+## 闪耀光栅
+透射光栅的缺点：零极无色散，衍射光强分配到正负各能极。观察的那一级光谱只能分到极少的能量。
+
+闪耀光栅的构造：反射式避免光栅吸收能量，把衍射和干涉零极错开。
+![闪耀光栅的结构](https://cdn.jsdelivr.net/gh/RedrockerLi/RedrockerLi.github.io@main/Pics/闪耀光栅的结构.7azbwpnob85c.webp)
+实际使用时主要采用沿N方向入射。
+## 沿N方向入射
+零极衍射角：$\theta=2\theta_b$
+
+$$\alpha=\frac{\pi a}{\lambda}(\sin{(\theta-\theta_b)}-\sin{\theta_b}) $$
+$$\beta=\frac{\pi d}{\lambda}\sin{\theta} $$
+
+如果$\Delta L=d\sin(\theta)=\lambda $
+则干涉一级主极大和衍射零极主极大重合。
+
+由于$a\approx d$除一级主峰外，其他极都缺极，闪耀光栅只有一列光谱。
+
+k极闪耀波长：$\Delta L=d\sin(\theta)=k\lambda_k\quad(k\in\mathbb{Z}) $
+
+## 沿n方向入射
+槽间光程差：$\Delta L=2d\sin{\theta_b}$
+
+# X射线衍射
+## 性质
+产生方式：
+- 高能电子打到靶上，电子受原子核电场作用减速，光谱连续
+- 高能电子激发原子内层电子，光谱不连续
+
+波长$10^{-11}-10^{-8}m $,穿透力强。
+
+## 布喇格公式
+$$2d\sin{\theta}=k\lambda$$
+$\theta$为掠入射角（入射光线和晶面的夹角）
+
+劳厄法看劳厄斑，德拜法看由亮环组成的德拜图。
+
+# 全息术
+波前的记录与再现。
+
+记录：干涉
+
+再现：衍射
+
+# 光的偏振
+圆偏振光：随时间统计矢量端点轨迹为圆
+
+椭圆偏振光：随时间统计矢量端点轨迹为椭圆
+
+迎着光线看，光矢量顺时针旋转为右旋。
+![两个相互垂直的简谐运动合成](https://cdn.jsdelivr.net/gh/RedrockerLi/RedrockerLi.github.io@main/Pics/两个相互垂直的简谐运动合成.1bp88tg8696o.webp)
+## 起偏器和检偏器
+马吕斯定律（只适用于线偏振光）：$I_P(\alpha)=I_0\cos^2{\alpha} $
+
+## 双折射
+o光：遵从折射定律
+
+e光：一般不遵从折射定律
+
+光轴：某一方向不发生双折射
+
+主截面：光轴和入射点法线组成的平面
+
+主平面：光轴和光的传播方向构成的平面
+
+o光的振动方向垂直于主平面，e光平行
+
+入射面和主截面不一致时，e光折射光可能不在入射面内
+
+主折射率：o光折射率为$n_o$，e光垂直光轴折射率为$n_e$
+
+双折射率：$n_e-n_o$
+
+正晶体：$n_e-n_o>0$，如石英（右图）
+
+负晶体：$n_e-n_o<0$，如方解石（左图）
+![单轴晶体的波面](https://cdn.jsdelivr.net/gh/RedrockerLi/RedrockerLi.github.io@main/Pics/单轴晶体的波面.2ozxzqdbq4n4.webp)
+
+## 偏振棱镜
+尼科耳棱镜：e光射出，o光全反射
+
+格兰-汤姆森棱镜：尼科耳棱镜的改进型
+
+洛匈棱镜、沃拉斯棱镜：分离两种光
+
+## 波片
+光轴平行于表面，o光和e光有附加相位差$\delta=\frac{2\pi}{\lambda}(n_o-n_e) $
+
+$\delta>0$，o光速度慢，相位落后
+
+- $\lambda$片：不改变偏振状态
+- $\frac{\lambda}{2} $片：线偏振偏振方向关于光轴轴对称。圆偏振旋转方向反向
+- $\frac{\lambda}{4} $片：圆偏振和线偏振相互转换（椭圆偏振主轴要和光轴平行）
+
+区分五种偏振态：偏振片导致的光强变化和消光位置+$\frac{\lambda}{4} $片的转换
+
+晶体补偿器：获得固定相位差
+
+## 偏振光的干涉
+两个垂直的偏振片相当于增加$\pi$的相位差
+
+## 光弹测量
+介质双折射率和应力成正比
+
+## 电光效应
+克尔效应：各向同性介质在外电场的作用下变为各向异性，产生双折射。
+
+泡克斯效应：各向异性介质改变双折射率。
+
+### 克尔效应
+$$\Delta \varphi=\frac{2\pi}{\lambda}lbE^2=2\pi KlE^2$$
+$K$为克尔常数。
+
+应用:高速光电开关，电光调制器
+
+缺点：所用液体常有剧毒，易爆炸
+
+### 泡克斯效应
+$$\Delta \varphi=\frac{2\pi}{\lambda}n_0^3\gamma El$$
+
+## 旋光效应
+转过的角度：
+$$\varphi=\alpha d$$
+$\alpha$为旋光率
+
+### 法拉第光隔离器
+两偏振片45度角摆放，中间的法拉第旋转器使光旋转45度，则一个方向光束通过，另一个到达第二个偏振片时偏振方向和偏振片方向垂直。
+
 # 光的吸收
 ## 线性吸收规律
 $$\mathrm{d}I=-\alpha I\mathrm{d}x $$
@@ -147,5 +300,3 @@ $$\tilde{n}=n+i\frac{c\alpha}{2\omega}=n(1+i\kappa) $$
 - 每经过一个吸收带，$n$显著增大。曲线总趋势随$\lambda$上升而抬高
 - $\lambda=0,n=1$
 - 极短波$n<1$
-
-# 经典色散理论
