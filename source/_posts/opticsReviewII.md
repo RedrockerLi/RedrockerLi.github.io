@@ -76,7 +76,7 @@ $$
 - 主极大：$\theta=0\quad I=I_0$
 - 极小：$a\sin{\theta}=k\lambda$
 - 次极大：$\alpha=\tan{\alpha}$ 
-- 次极大强度：$4.7\%I_0,1.7\%,0.8\%\cdots $
+- 次极大强度：$4.7\% I_0$,$1.7\% I_0$,$0.8\% I_0$ $\cdots $
 - 半角宽度：$\sin{\theta_1}=\frac{\lambda}{a}\Rightarrow\Delta\theta_0\cdot a\approx\lambda $
 - 主极大的宽度是次极大角宽度的两倍
 - 越限制，越展宽
@@ -122,7 +122,7 @@ $$I(\theta)=I_0\left(\frac{\sin{\alpha}}{\alpha} \right)^2\left(\frac{\sin{N\bet
 
 - 极大值位置：$\beta=k\pi\qquad  d\sin{\theta_k}=k\lambda$
 - 缺极：干涉极大和衍射极小重合。$d$和$a$成简单整数比。
-- 半角宽度：$\frac{\lambda}{Nd} $,干涉条纹的$\frac{1}{N} $
+- 半角宽度：$\frac{\lambda}{Nd}$ ,干涉条纹的 $\frac{1}{N} $
 - $N$变大，光的能量向主极大集中，单缝$N^2$倍，亮条纹更加细而亮。
 - 量程问题：$d\sin{\theta_k}=k\lambda\quad\theta_k<\frac{\pi}{2} $
 
@@ -160,7 +160,7 @@ k极闪耀波长：$\Delta L=d\sin(\theta)=k\lambda_k\quad(k\in\mathbb{Z}) $
 - 高能电子打到靶上，电子受原子核电场作用减速，光谱连续
 - 高能电子激发原子内层电子，光谱不连续
 
-波长$10^{-11}-10^{-8}m $,穿透力强。
+波长 $10^{-11}-10^{-8}m$ ,穿透力强。
 
 ## 布喇格公式
 $$2d\sin{\theta}=k\lambda$$
