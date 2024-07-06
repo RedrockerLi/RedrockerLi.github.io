@@ -3,7 +3,6 @@ title: 光学复习-II
 date: 2024-01-16 19:16:18
 tags:
     - 物理
-    - 光学
 excerpt: 光学期末考试复习
 mathjax: true
 ---
