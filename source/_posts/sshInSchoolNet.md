@@ -29,6 +29,8 @@ excerpt: 为出门不带电脑做出的努力。
 
 校园网~~通常~~（我的）是一个局域网，这一点比较方便，但还有一些问题。
 
+可能会报错：`Failed to start ssh.service: Unit ssh.service is masked.`使用`sudo systrmctl unmask ssh`即可。
+
 ## 非静态IP
 
 在校园网中，IP地址是变化的（至少我无法获得静态IP，也无法保证电脑永远不关机）。
