@@ -1,6 +1,6 @@
 ---
 title: vscode无法连接到wsl
-date: 2024-7-7 10:05:43
+date: 2024-7-7
 tags: 环境bug
 excerpt: 防火墙的锅
 ---

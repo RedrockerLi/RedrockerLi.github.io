@@ -29,7 +29,7 @@ excerpt: 为出门不带电脑做出的努力。
 
 校园网~~通常~~（我的）是一个局域网，这一点比较方便，但还有一些问题。
 
-可能会报错：`Failed to start ssh.service: Unit ssh.service is masked.`使用`sudo systrmctl unmask ssh`即可。
+> 可能会报错：`Failed to start ssh.service: Unit ssh.service is masked.`使用`sudo systrmctl unmask ssh`即可。
 
 ## 非静态IP
 
