@@ -1,6 +1,8 @@
 ---
-title: 使用char型变量的注意事项
-date: 2024-7-6 22:13:00
+title: Pnp解算初步
+date: 2024-7-13 13:38:44
+updated: 2024-7-13 13:38:44
+updated:
 tags:  
     - C语言
     - 汇编
