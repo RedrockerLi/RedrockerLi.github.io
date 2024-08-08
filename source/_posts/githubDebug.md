@@ -2,7 +2,7 @@
 title: GitHub使用寄录
 date: 2023-11-28 00:51:39
 updated: 2023-11-28 00:51:39
-tags:  环境bug
+tags:  环境
 excerpt: 如题，寄了才录。
 ---
 
