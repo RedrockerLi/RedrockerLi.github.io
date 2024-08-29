@@ -1,9 +1,9 @@
 ---
 title: 在校园网环境下的ssh远程连接
 date: 2023-11-24 13:03:34
-updated: 2023-11-24 13:03:34
+updated: 2024-8-29 16:17:25
 tags: 折腾杂记
-excerpt: 为出门不带电脑做出的努力。
+excerpt: 为出门不带电脑做出的努力，和虚拟机彩蛋。
 ---
 
 # 下载openssh-server
@@ -105,3 +105,10 @@ mail -s 'NEW IP' example@qq.com < ~/Documents/auto/IP.txt #把文件信息通过
 通过花生壳可解决
 
 `phddns status`查看花生壳状态。
+
+# 虚拟机中使用ssh
+性能孱弱的轻薄本配上虚拟机=打一个字卡一下，但WSL2+vscode的体验就非常好。为了在virtualbox虚拟机中获得类似WSL2的vscode体验，需要在网络设置中添加一张Host-Only网卡，如下图所示。
+
+![Host-Only](https://cdn.jsdelivr.net/gh/RedrockerLi/RedrockerLi.github.io@main/Pics/Host-Only.70pegmun72k0.webp)
+
+然后在虚拟机中查看这张网卡的ip地址即可。
