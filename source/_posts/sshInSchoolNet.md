@@ -107,7 +107,7 @@ mail -s 'NEW IP' example@qq.com < ~/Documents/auto/IP.txt #把文件信息通过
 `phddns status`查看花生壳状态。
 
 # 虚拟机中使用ssh
-性能孱弱的轻薄本配上虚拟机=打一个字卡一下，但WSL2+vscode的体验就非常好。为了在virtualbox虚拟机中获得类似WSL2的vscode体验，需要在网络设置中添加一张Host-Only网卡，如下图所示。
+性能孱弱的轻薄本配上虚拟机=打一个字卡一下，但WSL2+vscode的体验就非常好。为了在VirtualBox虚拟机中获得类似WSL2的vscode体验，需要在网络设置中添加一张Host-Only网卡，如下图所示。
 
 ![Host-Only](https://cdn.jsdelivr.net/gh/RedrockerLi/RedrockerLi.github.io@main/Pics/Host-Only.70pegmun72k0.webp)
 
