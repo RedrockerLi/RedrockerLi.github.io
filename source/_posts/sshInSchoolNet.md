@@ -113,7 +113,7 @@ mail -s 'NEW IP' example@qq.com < ~/Documents/auto/IP.txt #把文件信息通过
 
 然后在虚拟机中查看这张网卡的ip地址，在vscode中正常配置ssh即可连接。
 
-现在，距离“打败”WSL2还差一块拼图————WSLg。当然这个“打败”是在部分体验上。wsl还有可以使用全部的CPU核心，可以共享Windows的显卡驱动等优点。这里使用VirtualBox虚拟机是为了使用完整的Linux内核做网络实验+Windows生态，所以优化这方便的体验就够了。
+现在，距离“打败”WSL2还差一块拼图——WSLg。当然这个“打败”是在部分体验上。wsl还有可以使用全部的CPU核心，可以共享Windows的显卡驱动等优点。这里使用VirtualBox虚拟机是为了使用完整的Linux内核做网络实验+Windows生态，所以优化这方便的体验就够了。
 
 >**请注意：** 折腾环境的前提是明确需求+现有环境不顺手，请勿在环境上花费过多精力。
 
