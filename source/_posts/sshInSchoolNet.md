@@ -120,8 +120,10 @@ mail -s 'NEW IP' example@qq.com < ~/Documents/auto/IP.txt #把文件信息通过
 ## ssh+x11转发 = WSLg？
 网络上有很多配置博客，不再赘述相似的内容。
 
+>事实上只需要继续使用Host-Only网卡+VcXsrv(windows的X11转发接收器)即可，不需要下载其他更多东西。只需要在VcXsrv的`X0.hosts`文件中填写虚拟机IP，在虚拟机中设置`export DISPLAY=192.168.56.1:0.0`（WindowsIP+端口）即可。
+
 首先要明确两个IP：Host-Only网卡在Windows系统中的IP和在虚拟机中的IP。
 
 在配置过程中，可能遇到虚拟机不能ping通主机，但主机可以ping通虚拟机。这个时候检查Windows防火墙。然后[允许应用通过防火墙](https://blog.csdn.net/chenjin_csdn/article/details/106399050)。
 
-但是！！！gedit会开在虚拟机的窗口内，其他的应用比如xterm很正常。
+但是！！！gedit会开在虚拟机的窗口内，然后过很长时间才被转发到Windows，其他的应用比如xterm很正常。不过有vscode,nano,vim等各路编辑器，还是不要犯强迫症为好。
