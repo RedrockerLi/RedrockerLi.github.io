@@ -98,7 +98,7 @@ mail -s 'NEW IP' example@qq.com < ~/Documents/auto/IP.txt #把文件信息通过
 
 ## Termius的使用
 
-这是一个全平台的软件，免费版的功能已足够使用。具体用法可以STFW。
+这是一个全平台的软件，免费版的功能已足够使用。
 
 ## 内网穿透
 
@@ -111,4 +111,17 @@ mail -s 'NEW IP' example@qq.com < ~/Documents/auto/IP.txt #把文件信息通过
 
 ![Host-Only](https://cdn.jsdelivr.net/gh/RedrockerLi/RedrockerLi.github.io@main/Pics/Host-Only.70pegmun72k0.webp)
 
-然后在虚拟机中查看这张网卡的ip地址即可。
+然后在虚拟机中查看这张网卡的ip地址，在vscode中正常配置ssh即可连接。
+
+现在，距离“打败”WSL2还差一块拼图————WSLg。当然这个“打败”是在部分体验上。wsl还有可以使用全部的CPU核心，可以共享Windows的显卡驱动等优点。这里使用VirtualBox虚拟机是为了使用完整的Linux内核做网络实验+Windows生态，所以优化这方便的体验就够了。
+
+>**请注意：** 折腾环境的前提是明确需求+现有环境不顺手，请勿在环境上花费过多精力。
+
+## ssh+x11转发 = WSLg？
+网络上有很多配置博客，不再赘述相似的内容。
+
+首先要明确两个IP：Host-Only网卡在Windows系统中的IP和在虚拟机中的IP。
+
+在配置过程中，可能遇到虚拟机不能ping通主机，但主机可以ping通虚拟机。这个时候检查Windows防火墙。然后[允许应用通过防火墙](https://blog.csdn.net/chenjin_csdn/article/details/106399050)。
+
+但是！！！开启很慢！
