@@ -124,4 +124,4 @@ mail -s 'NEW IP' example@qq.com < ~/Documents/auto/IP.txt #把文件信息通过
 
 在配置过程中，可能遇到虚拟机不能ping通主机，但主机可以ping通虚拟机。这个时候检查Windows防火墙。然后[允许应用通过防火墙](https://blog.csdn.net/chenjin_csdn/article/details/106399050)。
 
-但是！！！gedit开启慢，而且有可能开在虚拟机的窗口内，其他的应用比如xterm很正常。
+但是！！！gedit会开在虚拟机的窗口内，其他的应用比如xterm很正常。
