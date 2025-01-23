@@ -196,6 +196,164 @@ torchrun ${DISTRIBUTED_ARGS[@]} pretrain_gpt.py \
     ${EVAL_AND_LOGGING_ARGS[@]}
 ```
 
+下面是一个脚本示例：
+
+```shell
+#!/bin/bash
+module purge
+module load compilers/cuda/12.1
+module load nccl/2.18.3-1_cuda12.1
+module load cudnn/8.9.5.29_cuda12.x
+module load compilers/gcc/9.3.0
+module load miniforge3/24.1
+
+source activate Megatron_RR
+
+export PYTHONUNBUFFERED=1
+export TRANSFORMERS_VERBOSITY="debug"
+export PYTHONPATH=/home/bingxing2/home/scx9ktr/LiChengyv/Megatron-LM:$PYTHONPATH
+
+### 启用IB通信
+export NCCL_ALGO=Ring
+export NCCL_MAX_NCHANNELS=16
+export NCCL_MIN_NCHANNELS=16
+export NCCL_DEBUG=INFO
+export NCCL_TOPO_FILE=/home/bingxing2/apps/nccl/conf/dump.xml
+export NCCL_IB_HCA=mlx5_0,mlx5_2
+export NCCL_IB_GID_INDEX=3
+export NCCL_IB_TIMEOUT=23
+export NCCL_IB_RETRY_CNT=7
+
+export CUDA_DEVICE_MAX_CONNECTIONS=1
+
+export OMP_NUM_THREADS=8
+
+HOSTFILE=/home/bingxing2/home/scx9ktr/LiChengyv/Megatron-LM/examples/gpt3/hostfile.log
+echo > $HOSTFILE
+### 获取每个节点的 hostname
+# for i in `srun hostname -s`
+for i in `scontrol show hostnames`
+do
+  let k=k+1
+  host[$k]=$i
+  rank[$k]=$(($k-1))
+  echo "${host[$k]} slots=$GPUS" >> $HOSTFILE
+done
+
+### 设置主节点,将第⼀个节点主机名做为 master 地址.
+MASTER_ADDR=${host[1]}
+### Nodes
+NODES="${#host[@]}"
+
+export CUDA_DEVICE_MAX_CONNECTIONS=1
+LR=1e-4
+
+##Config nnodes node_rank master_addr
+GPUS_PER_NODE=4
+# WORLD_SIZE=$(($GPUS_PER_NODE*$NUM_NODES))
+
+
+# 32B
+MODEL_SIZE=32
+GPT_MODEL_ARGS=(
+    --num-layers 48 
+    --hidden-size 1024 
+    --num-attention-heads 16 
+    --seq-length 1024 
+    --max-position-embeddings 1024 
+)
+# LOG Dir And Path
+output_home="./model"
+log_path="${output_home}/log/"
+checkpoint_path="${output_home}/output"
+tensorboard_dir="${output_home}/output"
+tensorboard_path="${tensorboard_dir}"
+
+
+
+
+DATA_HOME="~/dataset/gpt_sample_dataset_text_document"
+DATA_PATH="${DATA_HOME}/gpt_sample_dataset_text_document" #<Specify path and file prefix>_text_document
+VOCAB_FILE="${DATA_HOME}/gpt2-vocab.json"
+MERGE_FILE="${DATA_HOME}/gpt2-merges.txt"
+
+TRAINING_ARGS=(
+    --micro-batch-size 1 
+    --global-batch-size 1024 
+    --train-iters 500000 
+    --weight-decay 0.1 
+    --adam-beta1 0.9 
+    --adam-beta2 0.95 
+    --init-method-std 0.006 
+    --clip-grad 1.0 
+    --fp16
+    --lr 6.0e-5 
+    --lr-decay-style cosine 
+    --min-lr 6.0e-6
+    --lr-warmup-fraction .001 
+    --lr-decay-iters 430000 
+)
+
+MODEL_PARALLEL_ARGS=(
+        --tensor-model-parallel-size 2
+        --pipeline-model-parallel-size 4 
+)
+
+DATA_ARGS=(
+    --data-path $DATA_PATH 
+    --vocab-file $VOCAB_FILE 
+    --merge-file $MERGE_FILE 
+    --split 949,50,1
+)
+
+EVAL_AND_LOGGING_ARGS=(
+    --log-interval 2
+    --save-interval 10000 
+    --eval-interval 1000 
+    --save $checkpoint_path 
+    --load $checkpoint_path
+    --eval-iters 100
+    --tensorboard-dir $tensorboard_path
+)
+
+
+echo "torchrun --nproc_per_node=$GPUS_PER_NODE --master_port=29546 --nnodes=$NODES --node_rank=0 --master_addr="${host[1]}" \
+    /home/bingxing2/home/scx9ktr/LiChengyv/Megatron-LM/pretrain_gpt.py \
+    ${GPT_MODEL_ARGS[@]} \
+    ${TRAINING_ARGS[@]} \
+    ${MODEL_PARALLEL_ARGS[@]} \
+    ${DATA_ARGS[@]} \
+    ${EVAL_AND_LOGGING_ARGS[@]} >> ${SLURM_JOB_ID}.default_0.out 2>&1 &"
+
+### 主节点运行
+torchrun --nproc_per_node=$GPUS_PER_NODE --master_port=29546 --nnodes=$NODES --node_rank=0 --master_addr="${host[1]}" \
+    /home/bingxing2/home/scx9ktr/LiChengyv/Megatron-LM/pretrain_gpt.py \
+    ${GPT_MODEL_ARGS[@]} \
+    ${TRAINING_ARGS[@]} \
+    ${MODEL_PARALLEL_ARGS[@]} \
+    ${DATA_ARGS[@]} \
+    ${EVAL_AND_LOGGING_ARGS[@]} >> ${SLURM_JOB_ID}.default_0.out 2>&1 &
+
+### 使用 srun 运行第二个节点
+for((i=2;i<=${NODES};i++));
+do
+    node_host=${host[$i]}
+    node_rank=${rank[$i]}
+    echo "nodes:${NODES}, host:${node_host}, node_rank:${node_rank},master_addr:${MASTER_ADDR}"
+    srun -N 1 -w $node_host \
+        /home/bingxing2/home/scx9ktr/LiChengyv/Megatron-LM/examples/gpt3/init.sh
+    srun -N 1 --gres=gpu:$GPUS_PER_NODE -w $node_host \
+        torchrun --nproc_per_node=$GPUS_PER_NODE --master_port=29546 --nnodes=$NODES --node_rank=$node_rank --master_addr="${MASTER_ADDR}" \
+    /home/bingxing2/home/scx9ktr/LiChengyv/Megatron-LM/pretrain_gpt.py \
+    ${GPT_MODEL_ARGS[@]} \
+    ${TRAINING_ARGS[@]} \
+    ${MODEL_PARALLEL_ARGS[@]} \
+    ${DATA_ARGS[@]} \
+    ${EVAL_AND_LOGGING_ARGS[@]} >> ${SLURM_JOB_ID}.default_${node_rank}.out 2>&1 &
+done
+wait
+```
+
 同时还有一些参数配置在`examples/gpt3/gpt_config.yaml`，在`parse_args（）`函数中被读取，==但并未找到`args.yaml_cfg`是怎样配置的。==
 
 #### pretrain_gpt.py
@@ -228,7 +386,7 @@ initialize_megatron(
 )
 ```
 
-d核心功能是`initialize_model_parallel`提供的。
+核心功能是`initialize_model_parallel`提供的。
 
 ```python
 mpu.initialize_model_parallel(
@@ -292,7 +450,7 @@ encoder_rank_generator = RankGenerator(
 
 ```python
 def get_ranks(self, token):
-    # token是一个字符串，比如“tp-dp”，返回的mask是一个和self.order一样大的布尔数组。token中的并行类型在self.order中出现，则对应位置的mask为true，反之为fa l se
+    # token是一个字符串，比如“tp-dp”，返回的mask是一个和self.order一样大的布尔数组。token中的并行类型在self.order中出现，则对应位置的mask为true，反之为false
     mask = self.get_mask(self.order, token)
     ranks = generate_masked_orthogonal_rank_groups(self.world_size, self.ordered_size, mask)
     if self.rank_offset > 0:
@@ -402,3 +560,12 @@ hidden_states = tensor_parallel.checkpoint(
     )
 ```
 
+> 参考文献：
+>
+> [1] [万字长文解析：大模型需要怎样的硬件算力](https://mp.weixin.qq.com/s/NoREsyLXNVk1aABtSkhBDA)
+>
+> [2]Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism
+>
+> [3]Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM
+>
+> [4]Reducing Activation Recomputation in Large Transformer Models
