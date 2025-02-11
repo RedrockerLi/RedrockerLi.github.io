@@ -1,7 +1,7 @@
 ---
 title: Megatron:从思想到实现
 date: 2025-01-06 13:52:43
-updated: 2025-01-10 14:04:49
+updated: 2025-02-11 10:04:36
 tags:
     - MLsys
 excerpt: paper&code
@@ -354,7 +354,7 @@ done
 wait
 ```
 
-同时还有一些参数配置在`examples/gpt3/gpt_config.yaml`，在`parse_args（）`函数中被读取，==但并未找到`args.yaml_cfg`是怎样配置的。==
+同时还有一些参数配置在`examples/gpt3/gpt_config.yaml`，在`parse_args（）`函数中被读取。享用yaml文件需要加上--yaml_cfg这个命令行参数。
 
 #### pretrain_gpt.py
 
@@ -398,28 +398,7 @@ mpu.initialize_model_parallel(
     args.virtual_pipeline_model_parallel_size,
     # decoder的起始rank
     args.pipeline_model_parallel_split_rank,
-    # 上下文并行（把输入拆成context_parallel_size组）
-    context_parallel_size =args.context_parallel_size,
-    hierarchical_context_parallel_sizes =args.hierarchical_context_parallel_sizes,
-    # 每个专家并行组中用于混合专家并行的 GPU 数量
-    expert_model_parallel_size =args.expert_model_parallel_size,
-    # 在数据并行域中分布式优化器的副本数量
-    num_distributed_optimizer_instances =args.num_distributed_optimizer_instances,
-    # 用于分割专家的各个张量的 GPU 数量
-    expert_tensor_parallel_size =args.expert_tensor_parallel_size,
-    # 分布式操作的超时时间
-    distributed_timeout_minutes =args.distributed_timeout_minutes,
-    # NCCL通信器的配置文件路径
-    nccl_communicator_config_path =args.nccl_communicator_config_path,
-    # 指定并行策略的顺序
-    order ='tp-cp-ep-dp-pp' if not args.use_tp_pp_dp_mapping else 'tp-pp-dp',
-    # 专门用于编码器的张量并行大小(上面的用于decoder)
-    encoder_tensor_model_parallel_size =args.encoder_tensor_model_parallel_size,
-    # 专门用于编码器的流水线并行大小
-    encoder_pipeline_model_parallel_size =args.encoder_pipeline_model_parallel_size,
-    # TODO
-    get_embedding_ranks =get_embedding_ranks,
-    get_position_embedding_ranks =get_position_embedding_ranks,
+    # ...
 )
 ```
 
@@ -460,7 +439,7 @@ def get_ranks(self, token):
     return ranks
 ```
 
-`generate_masked_orthogonal_rank_groups()`函数用于划分进程组。会根据并行方法的并行度和token中出现的并行方法来生成。下面使用数学语言来描述，代码实现和数学语言一一对应：
+`generate_masked_orthogonal_rank_groups()`函数用于划分进程组。会根据并行方法的并行度和token中出现的并行方法来生成。下面是一个例子：
 
 假设`self.ordered_size`是`[tp_size, pp_size, dp_size]`，`mask`是`[True, False , True]`。
 
@@ -506,35 +485,64 @@ for ranks in generator_wrapper('dp'):
 
 如果输入参数是tp-pp,则会返回encoder和decoder处在同一位置的组，且encoder不可以循环使用，encoder和decoder必须一样长。
 
-==TODO:为什么会这样设置通信组==
+设置同一位置的为一组，是保证处在同一位置的可以实现集合通信（如AllReduce）。对于阶段间通信，可以使用点对点通信。
 
-同时使用`get_model`函数分割模型，主要是按照流水级划分，同时会设置数据并行和张量并行的参数。。
+同时使用`get_model`函数分割模型，主要是按照流水级划分，同时会设置数据并行和张量并行的参数。
 
 #### 训练
 
 重要的函数是`forward_backward_pipelining_with_interleaving`，分块实现流水线的填充，正常运行，冲刷。
 
-流水线并行通信：`p2p_communication.send_forward_recv_forward`->`_communicate`
+使用一个例子走一遍函数流程：
+
+PP3 N3M5 with VP2
 
 ```python
-if config.use_ring_exchange_p2p:
-    def _ring_exchange_wrapper(**kwargs):
-        torch.distributed.ring_exchange(**kwargs)  # 使用环交换进行通信
-        return []
-
-    p2p_func = _ring_exchange_wrapper 
-elif config.batch_p2p_comm:
-    assert wait_on_reqs  # 确保等待请求
-    p2p_func = _batched_p2p_ops  
-else:
-    p2p_func = _p2p_ops  
+pipeline_parallel_size = 3
+num_microbatches = 5
+num_model_chunks = 3
+total_num_microbatches = 15
+config.microbatch_group_size_per_vp_stage
 ```
 
-`initialize_model_parallel`时在使用`generator_wrapper('pp')`后设置了`_PIPELINE_MODEL_PARALLEL_GROUP`，设置时为当前rank所在组。在这里通信的时候指定该组。
+在前向传播+反向传播的情况下：
 
-==TODO:数据并行和张量并行在训练过程中没找到是怎么实现的。==
+```python
+num_warmup_microbatches = (pipeline_parallel_size - pipeline_parallel_rank - 1) * 2
+num_warmup_microbatches+= (num_model_chunks - 1)*config.microbatch_group_size_per_vp_stage
+# num_warmup_microbatches = min(8-2x,total_num_microbatches) 
+```
 
-通过一些蛛丝马迹，初步猜测数据并行是在划分数据集，提供训练数据时实现的;张量并行是在定义模型时实现的。
+下面看看x的取值：
+
+类似上面的dp,_PIPELINE_MODEL_PARALLEL_GROUP会被生成为一个列表（如果有多个group,因为generator_wrapper中如果是pp,encoder可以循环使用）。且如果一个rank在多个组中，他们有相同的index,所以看pp_group[0]的rank即可。
+
+| virtual_microbatch_id | 0    | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    | 10   | 11   | 12   | 13   | 14   |
+| --------------------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| microbatch_id         | 0    | 1    | 2    | 0    | 1    | 2    | 0    | 1    | 2    | 3    | 4    | 3    | 4    | 3    | 4    |
+| model_chunk_id        | 0    | 0    | 0    | 1    | 1    | 1    | 2    | 2    | 2    | 0    | 0    | 1    | 1    | 2    | 2    |
+
+如果是流水线的第二级，当k=1时，recv_tensor_from_previous_stage返回值为True,0
+
+```python
+recv_prev = True
+next_forward_model_chunk_id = 0
+fwd_recv_buffer[1] = 
+```
+
+> 流水线并行通信：`p2p_communication.send_forward_recv_forward`->`_communicate`
+>
+> ```python
+> return tensor_recv_prev, tensor_recv_next, reqs
+> # tensor_recv_prev : tensor or None，取决于recv_prev是否为True
+> # reqs : 一系列通信请求
+> ```
+>
+> `initialize_model_parallel`时在使用`generator_wrapper('pp')`后设置了`_PIPELINE_MODEL_PARALLEL_GROUP`，设置时为当前rank所在组。在这里通信的时候指定该组。
+
+数据并行是在划分数据集，提供训练数据时实现的;张量并行是在定义模型时实现的。
+
+
 
 ### selective activation recomputation
 
